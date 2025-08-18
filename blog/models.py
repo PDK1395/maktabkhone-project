@@ -13,8 +13,15 @@ class Post(models.Model):
     created_date = models.DateTimeField(auto_now_add= True)
     updated_date = models.DateTimeField(auto_now= True) # 
     
-    def __str__(self):
-        return " {} - {} ".format(self.title , self.id)
+
 # in modele neveshtan to sql hast bara gereftan tamam dade haye mojod    
 # SELECT * FROM Post
 # SELECT * FROM Post WHERE status = 1
+
+    class Meta:
+        ordering = ['-created_date']
+#        verbose_name = 'پست'
+#        verbose_name_plural = 'پست ها'
+        
+    def __str__(self):
+        return " {} - {} ".format(self.title , self.id)

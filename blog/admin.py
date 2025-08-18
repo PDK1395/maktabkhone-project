@@ -8,7 +8,7 @@ class PostAdmin(admin.ModelAdmin):
     # fields = ("title",'content',)
     list_display = ('title','content','status','counted_view','published_date','created_date','updated_date')
     list_filter = ('status',)
-    ordering = ['-created_date'] # - poshtesh baes mishe baraks beshe 
+    #ordering = ['-created_date'] # - poshtesh baes mishe baraks beshe 
     search_fields = ['title','content']
 
 # admin.site.register(Post)
