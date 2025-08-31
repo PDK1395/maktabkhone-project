@@ -5,9 +5,9 @@ def blog_home_view(request):
     context = {'posts' : posts}
     return render(request , 'blog/blog-home.html' , context)
 
-def blog_single_view(request):
-    posts = Post.objects.filter(status = 1)
-    context = {'posts' : posts}
+def blog_single_view(request,pid):
+    post = get_object_or_404(Post,pk=pid)
+    context = {'post' : post}
     return render(request , 'blog/blog-single.html' , context )
 
 def test(request,pid):
