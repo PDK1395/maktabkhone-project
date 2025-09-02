@@ -1,11 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.name
+    
+    
 class Post(models.Model):
-    #author
-    #image
+    author = models.ForeignKey(User,on_delete= models.SET_NULL , null=True) # inja age beja ( set_null ) mizashtim ( CASCADE ) kole post haye oon fard ham pak mikard vaghty oon fard acc ro delete mikard 
+    image = models.ImageField(upload_to='blog/' , default= 'blog/default.jpg')
     title = models.CharField(max_length=255)
     content = models.TextField()
-    # category 
+    category = models.ManyToManyField(Category) # inja null ya default nazashtim chon django mige midonam mitone null ham bashe pas dast nemizanim
     # tags
     counted_view = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
@@ -25,3 +33,4 @@ class Post(models.Model):
         
     def __str__(self):
         return " {} - {} ".format(self.title , self.id)
+    
