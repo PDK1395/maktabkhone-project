@@ -8,7 +8,9 @@ def blog_home_view(request):
 def blog_single_view(request,pid):
     posts = Post.objects.filter(status =1)
     post = get_object_or_404(posts,pk=pid)
-    context = {'post' : post}
+    next_post = posts.filter(id__gt=post.id).order_by('id').first()
+    prev_post = posts.filter(id__lt=post.id).order_by('-id').first()
+    context = {'post' : post , 'posts':posts ,'next_post': next_post , 'prev_post': prev_post}
     return render(request , 'blog/blog-single.html' , context )
 
 def test(request,pid):
