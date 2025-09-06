@@ -34,3 +34,11 @@ class Post(models.Model):
     def __str__(self):
         return " {} - {} ".format(self.title , self.id)
     
+    
+'''    
+    def small_content(self):
+        if len(self.content) <=100:      # in ham mishod valy khob to template kardam ino ke behtar va behine tar bood
+            return self.content
+        else:
+            return self.content[:100] + ' , ....'
+'''
