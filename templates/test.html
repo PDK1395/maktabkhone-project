@@ -1,5 +1,6 @@
 {% load blog_tags %}
-{% posts as total_posts %}
+{% total_posts as tp %}
+{% posts as allposts%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,10 @@
 </head>
 <body>
     <P> hi </P>
-    {%for post in total_posts %}
-    <p> post  {{post.id}} : {{post.title}} </p>
+    <P> total posts : {{tp}} </P>
+    {%for post in allposts %}
+    <p> post  {{post.id}} : {{post.title}} : {{post.content|snippet}}</p>
     {% endfor %}
+    {% latest_posts %}
 </body>
 </html>
