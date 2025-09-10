@@ -96,7 +96,7 @@
                   <a href="{% url 'blog:author' auth_name=post.author.username %}">{{post.author.get_full_name}}</a> <span class="lnr lnr-user"></span>
                 </p>
                 <p class="date col-lg-12 col-md-12 col-6">
-                  <a href="#">{{post.published_date}}</a> <span class="lnr lnr-calendar-full"></span>
+                  <a href="#">{{post.published_date|date:'m/d/Y'}}</a> <span class="lnr lnr-calendar-full"></span>
                 </p>
                 <p class="view col-lg-12 col-md-12 col-6">
                   <a href="#">{{post.counted_view}}</a> <span class="lnr lnr-eye"></span>
@@ -116,29 +116,45 @@
             </div>
           </div>
           {% endfor %}
-          <nav class="blog-pagination justify-content-center d-flex">
+          <nav class="blog-pagination justify-content-center d-flex">                                     
             <ul class="pagination">
+                            <!--
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            -->
+              {% if posts.has_previous %}
               <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous"><span aria-hidden="true"><span class="lnr lnr-chevron-left"></span></span></a>
+                <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous"><span aria-hidden="true"><span class="lnr lnr-chevron-left"></span></span></a>
               </li>
-              <li class="page-item">
-                <a href="#" class="page-link">01</a>
-              </li>
+              {% endif %}
+
+              
+              <!--         
               <li class="page-item active">
                 <a href="#" class="page-link">02</a>
               </li>
-              <li class="page-item">
-                <a href="#" class="page-link">03</a>
+              -->     
+
+              {% for i in posts.paginator.page_range %}
+              {% if posts.number == i %}
+              <li class="page-item active">
+                <a href="?page={{i}}" class="page-link">{{i}}</a>
               </li>
+              {% else %}
               <li class="page-item">
-                <a href="#" class="page-link">04</a>
+                <a href="?page={{i}}"  class="page-link">{{i}}</a>
               </li>
+              {% endif %}
+              {% endfor %}
+
+              {% if posts.has_next %}
+                <!--<a href="?page={{ posts.next_page_number }}">next</a>
+                <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>-->
+                  
               <li class="page-item">
-                <a href="#" class="page-link">09</a>
+                <a href="?page={{ posts.next_page_number }}" class="page-link" aria-label="Next"><span aria-hidden="true"><span class="lnr lnr-chevron-right"></span></span></a>
               </li>
-              <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next"><span aria-hidden="true"><span class="lnr lnr-chevron-right"></span></span></a>
-              </li>
+              {% endif %}
             </ul>
           </nav>
         </div>
