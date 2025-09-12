@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse , JsonResponse
+from django.http import HttpResponse , JsonResponse , HttpResponseRedirect
 from website.models import Contact
+from website.forms import NameForm , ContactForm , Newsletterform
+
 def home_view(request):
     return render(request , 'website/index.html' )
 
@@ -8,21 +10,32 @@ def about_view(request):
     return render(request , 'website/about.html' )
 
 def contact_view(request):
-    return render(request , 'website/contact.html' )
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid:
+            form.save()
+           
+    form = ContactForm()
+    return render(request , 'website/contact.html' , {'form':form})
+
+def newsletter_view(request):
+    if request.method == 'POST':
+        form = Newsletterform(request.POST)
+        if form.is_valid :
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
+    
 
 def test(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-        c = Contact()
-        c.name = name
-        c.email = email
-        c.subject = subject
-        c.message = message
-        c.save()
-        print(name,email,subject,message)
+        form = ContactForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return HttpResponse('done')
+        else:
+            return HttpResponse('not valid')    
     
-    
-    return render(request,'test.html',{})
+    form = ContactForm()
+    return render(request,'test.html',{'form':form})
