@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 {% load blog_tags %}
 <div class="single-sidebar-widget popular-post-widget">
     <h4 class="popular-title">Latest Posts</h4>
@@ -10,9 +11,10 @@
         </div>
         <div class="details">
         <a href='{% url 'blog:single' pid=post.id %}'><h6>{{post.title}}</h6></a>
-        <p>02 Hours ago</p>
-        </div>
-    </div>
+        <p>{{post.published_date|date:'d M Y'}}</p>
+        <p>{{post.published_date|naturaltime}}</p>            <!-- django.contrib.humanize inja ro toye site ha save kardam ke model haye mokhtalefiye ke roye adad ha mishe kar kard va humanize kardeshon ke khoshgel tar va ensani tar shan toye setting installed app ham add shode -->
+        </div>                                                <!-- hatman lazeme ke bala load humanize ro benevisim -->                                                              
+    </div>                                                    <!-- inja ham yek pip dige install kardim ke komak konandas ke inam to save haye site ha save kardam be esm django-extentions ke to installed app setting ham add kardam -->
         {% endfor %}
 
     </div>

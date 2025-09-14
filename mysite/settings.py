@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9ph0-5b%2ht+0ddce8wk%s#v2frj21ikj1m&wit5!3_*nkva%g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,9 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django.contrib.sites',                           # ino darbare domain hast ke gharare kamel tozih bede va man yek site az khode django save kardam ke ino tozih mide be esm The “sites” framework 
+    'django_extensions',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
 ]
+
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
