@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse , HttpResponseRedirect
 from website.models import Contact
 from website.forms import NameForm , ContactForm , Newsletterform
+from django.contrib import messages
 
 def home_view(request):
     return render(request , 'website/index.html' )
@@ -12,16 +13,29 @@ def about_view(request):
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        if form.is_valid:
-            form.save()
-           
-    form = ContactForm()
-    return render(request , 'website/contact.html' , {'form':form})
+        if form.is_valid(): 
+            contact_data = form.cleaned_data
+            contact_data['name'] = 'ناشناس'  
+            
+            form.save(commit=False)  
+            form.instance.name = contact_data['name']
+            form.save()  
+            messages.add_message(request, messages.SUCCESS, 'Your contact comment has been created.')
+        else:
+            messages.add_message(request, messages.ERROR, 'The comment could not be created.')
 
+    form = ContactForm()
+    return render(request, 'website/contact.html', {'form': form})
+    
+   
 def newsletter_view(request):
     if request.method == 'POST':
         form = Newsletterform(request.POST)
         if form.is_valid :
+            contact_data = form.cleaned_data
+            contact_data['name'] = 'ناشناس'                      
+            form.save(commit=False) 
+            form.instance.name = contact_data['name']
             form.save()
             return HttpResponseRedirect('/')
     else:
