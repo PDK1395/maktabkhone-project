@@ -3,13 +3,16 @@ from blog.models import Post
 from django.utils import timezone
 from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
 
-def blog_home_view(request,cat_name=None,auth_name = None):
+def blog_home_view(request,cat_name=None,auth_name = None,tag_name = None):
     posts = Post.objects.filter(published_date__lte = timezone.now() , status =1)
     
     if cat_name:
         posts = posts.filter(category__name = cat_name)
     if auth_name:
-        posts = posts.filter(author__username = auth_name)
+        posts = posts.filter(author__username = auth_name)                 
+    if tag_name:
+        posts = posts.filter(tags__name__in=[tag_name])
+
     
     posts = Paginator(posts,2)
     try:

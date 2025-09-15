@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',              # in bara sakht sitemap hast ke neshon bede adress haro ke to har ghesmat yek sitemaps.py ijad kardim
     'robots',                               # in 
     'debug_toolbar',
+    'taggit',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
 ]
