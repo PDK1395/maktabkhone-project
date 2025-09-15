@@ -40,11 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.humanize',              # humanize bara tanzim adad ha be shekli ke ziba beshe bara ensan in ham to django site ha save shode
     'django.contrib.sites',                 # ino darbare domain hast ke gharare kamel tozih bede va man yek site az khode django save kardam ke ino tozih mide be esm The “sites” framework 
     'django_extensions',                    # in extention ha hastan ke yek pip hast ke install kardim va komak mikone bara moshkel yabi va chiz haye dige to googele django site ha save shode
+    'django.contrib.sitemaps',              # in bara sakht sitemap hast ke neshon bede adress haro ke to har ghesmat yek sitemaps.py ijad kardim
+    'robots',                               # in 
+    'debug_toolbar',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
 ]
 
+# sites framework
 SITE_ID = 2
+
+# robots
+ROBOTS_USE_HOST = True
+ROBOTS_USE_SITEMAP = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -135,3 +144,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

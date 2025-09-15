@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -34,8 +35,9 @@ class Post(models.Model):
     def __str__(self):
         return " {} - {} ".format(self.title , self.id)
     
-    
-'''    
+    def  get_absolute_url(self):                                 # in behtare chon baes mishe ke ye view this post to ghesmat admin bara post ha ijad shavad valy oon yeki nemikone in karo
+        return reverse('blog:single',kwargs={'pid':self.id})     # ya in bashe ya oon location to sitemap blog
+'''                                                                     
     def small_content(self):
         if len(self.content) <=100:      # in ham mishod valy khob to template kardam ino ke behtar va behine tar bood
             return self.content
