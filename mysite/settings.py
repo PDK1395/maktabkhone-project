@@ -27,10 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+#captcha for admin 
+MULTI_CAPTCHA_ADMIN = {           # ina ro mishe estefade kard bara jeloye 'engine': 1-simple-captcha  2-recaptcha  3-recaptcha2
+    'engine': 'simple-captcha',
+}
 
 # Application definition
 
 INSTALLED_APPS = [
+    'multi_captcha_admin',           # ino ma hatman bayad ghabl az django.contrib.admin ezaf konim to site ha multi captcha admin ham save kardam guidesho
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +47,8 @@ INSTALLED_APPS = [
     'django_extensions',                    # in extention ha hastan ke yek pip hast ke install kardim va komak mikone bara moshkel yabi va chiz haye dige to googele django site ha save shode
     'django.contrib.sitemaps',              # in bara sakht sitemap hast ke neshon bede adress haro ke to har ghesmat yek sitemaps.py ijad kardim
     'robots',                               # in 
+    'django_summernote',
+    'captcha',
     'debug_toolbar',
     'taggit',
     'website.apps.WebsiteConfig',
@@ -54,6 +61,9 @@ SITE_ID = 2
 # robots
 ROBOTS_USE_HOST = True
 ROBOTS_USE_SITEMAP = True
+
+#summer note 
+SUMMERNOTE_THEME = 'bs4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,3 +159,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

@@ -1,5 +1,6 @@
 from django import forms
 from website.models import Contact , NewsLetter
+from captcha.fields import CaptchaField
 
 class NameForm(forms.Form):
     name = forms.CharField(max_length=255)
@@ -10,6 +11,7 @@ class NameForm(forms.Form):
     
 class ContactForm(forms.ModelForm):
     # last_name = forms.CharField(max_length=255)       inam be in shekl form jadid ezaf mikonim
+    captcha = CaptchaField()
     class Meta:
         model = Contact
         # fields = ['name','email']    inam be in ravesh to chand marhale az karbar begirim etelayat ro va check konim ke doroste ya na
