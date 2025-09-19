@@ -38,6 +38,8 @@ class Post(models.Model):
     
     def  get_absolute_url(self):                                 # in behtare chon baes mishe ke ye view this post to ghesmat admin bara post ha ijad shavad valy oon yeki nemikone in karo
         return reverse('blog:single',kwargs={'pid':self.id})     # ya in bashe ya oon location to sitemap blog
+
+    
 '''                                                                     
     def small_content(self):
         if len(self.content) <=100:      # in ham mishod valy khob to template kardam ino ke behtar va behine tar bood
@@ -45,3 +47,20 @@ class Post(models.Model):
         else:
             return self.content[:100] + ' , ....'
 '''
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    approved = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-created_date']
+        
+    def __str__(self):
+        return " {} - {} ".format(self.name , self.id)
+        
