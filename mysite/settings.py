@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'taggit',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
+    'accounts.apps.AccountsConfig',
+    
 ]
 
 # sites framework
