@@ -9,6 +9,6 @@ urlpatterns = [
     #logout
     path('logout' , views.logout_view , name= 'logout'),
     #register / signup
-    path('signup' , views.singup_view , name='singup'),
+    path('signup/', views.signup_view, name='signup'), 
        
 ]
