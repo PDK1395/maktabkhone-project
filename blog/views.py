@@ -1,4 +1,4 @@
-from django.shortcuts import render , get_object_or_404
+from django.shortcuts import render , get_object_or_404 , redirect
 from blog.models import Post , Comment
 from django.utils import timezone
 from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
@@ -54,6 +54,13 @@ def blog_single_view(request,pid):
             messages.add_message(request,messages.ERROR,'your message had problem creating')
     posts = Post.objects.filter(published_date__lte = timezone.now() , status =1)
     post = get_object_or_404(posts,pk=pid)
+    print("User authenticated:", request.user.is_authenticated)
+    print("Post login_required:", post.login_required)
+    print("Post id:", post.id)
+    if post.login_required and not request.user.is_authenticated:
+    # Post requires login but user not logged in → redirect to login
+        return redirect('accounts:login')
+            
     comments = Comment.objects.filter(post=post.id , approved=True)
     post.counted_view += 1
     post.save()  
@@ -61,13 +68,13 @@ def blog_single_view(request,pid):
     prev_post = posts.filter(id__lt=post.id, status=1).order_by('-published_date').first()
     form = CommentForm()
     context = {'post' : post ,
-               'next_post': next_post , 
-               'prev_post': prev_post , 
-               'comments' : comments ,
-               'form' : form ,
+            'next_post': next_post , 
+            'prev_post': prev_post , 
+            'comments' : comments ,
+            'form' : form ,
     }       
-    form = CommentForm()
     return render(request , 'blog/blog-single.html' , context )
+    
 
 
 def blog_category(request,cat_name):
