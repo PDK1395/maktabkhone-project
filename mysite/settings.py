@@ -11,42 +11,46 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9ph0-5b%2ht+0ddce8wk%s#v2frj21ikj1m&wit5!3_*nkva%g'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-#captcha for admin 
-MULTI_CAPTCHA_ADMIN = {           # ina ro mishe estefade kard bara jeloye 'engine': 1-simple-captcha  2-recaptcha  3-recaptcha2
-    'engine': 'simple-captcha',
-}
+# Email settings - choose one option
 
-# Application definition
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'  # یا رمز عبور اپ
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+# OR
+
+# Option 2: For testing purposes - Email in console (no real email sent)
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 INSTALLED_APPS = [
-    'multi_captcha_admin',           # ino ma hatman bayad ghabl az django.contrib.admin ezaf konim to site ha multi captcha admin ham save kardam guidesho
+    'multi_captcha_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',              # humanize bara tanzim adad ha be shekli ke ziba beshe bara ensan in ham to django site ha save shode
-    'django.contrib.sites',                 # ino darbare domain hast ke gharare kamel tozih bede va man yek site az khode django save kardam ke ino tozih mide be esm The “sites” framework 
-    'django_extensions',                    # in extention ha hastan ke yek pip hast ke install kardim va komak mikone bara moshkel yabi va chiz haye dige to googele django site ha save shode
-    'django.contrib.sitemaps',              # in bara sakht sitemap hast ke neshon bede adress haro ke to har ghesmat yek sitemaps.py ijad kardim
-    'robots',                               # in 
+    'django.contrib.humanize',
+    'django.contrib.sites',
+    'django_extensions',
+    'django.contrib.sitemaps',
+    'robots',
     'django_summernote',
     'captcha',
     'debug_toolbar',
@@ -54,18 +58,9 @@ INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
     'accounts.apps.AccountsConfig',
-    
 ]
 
-# sites framework
 SITE_ID = 2
-
-# robots
-ROBOTS_USE_HOST = True
-ROBOTS_USE_SITEMAP = True
-
-#summer note 
-SUMMERNOTE_THEME = 'bs4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,20 +92,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -127,37 +114,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
-
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "statics",
-]
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
