@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import re
+from accounts.forms import CustomUserCreationForm
 
 # تابع برای بررسی ایمیل
 def is_valid_email(email):
@@ -52,7 +53,7 @@ def logout_view(request):
 def signup_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = UserCreationForm(request.POST)
+            form = CustomUserCreationForm(request.POST)
             if form.is_valid():
                 # بررسی اینکه ایمیل تکراری نباشد
                 email = form.cleaned_data.get('email')
@@ -68,7 +69,7 @@ def signup_view(request):
                 form.save()
                 return redirect('accounts:login')
         else:
-            form = UserCreationForm()
+            form = CustomUserCreationForm()
 
         context = {'form': form}
         return render(request, 'accounts/signup.html', context)
