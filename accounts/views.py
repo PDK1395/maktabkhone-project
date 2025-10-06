@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 import re
 from accounts.forms import CustomUserCreationForm
 
-# تابع برای بررسی ایمیل
+
 def is_valid_email(email):
     regex = r'^\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
     return re.match(regex, email) is not None
@@ -14,28 +14,28 @@ def is_valid_email(email):
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            username_email = request.POST['username_email']  # ورودی نام کاربری یا ایمیل
+            username_email = request.POST['username_email']  
             password = request.POST['password']
             
-            # بررسی اینکه ورودی ایمیل هست یا نام کاربری
+
             if is_valid_email(username_email):
-                # جستجو برای ایمیل
+
                 try:
-                    user = User.objects.get(email=username_email)  # پیدا کردن کاربر با ایمیل
-                    user = authenticate(request, username=user.username, password=password)  # احراز هویت با نام کاربری
+                    user = User.objects.get(email=username_email) 
+                    user = authenticate(request, username=user.username, password=password) 
                 except User.DoesNotExist:
                     user = None
             else:
-                # جستجو برای نام کاربری
+
                 user = authenticate(request, username=username_email, password=password)
 
             if user is not None:
                 login(request, user)
                 return redirect('/')
             else:
-                # اگر اعتبارسنجی نام کاربری و رمز عبور اشتباه باشد
+
                 form = AuthenticationForm()
-                context = {'form': form, 'error': 'نام کاربری یا رمز عبور اشتباه است.'}
+                context = {'form': form, 'error': 'username or password is wrong .'}
                 return render(request, 'accounts/login.html', context)
         else:
             form = AuthenticationForm()
@@ -55,17 +55,17 @@ def signup_view(request):
         if request.method == 'POST':
             form = CustomUserCreationForm(request.POST)
             if form.is_valid():
-                # بررسی اینکه ایمیل تکراری نباشد
+
                 email = form.cleaned_data.get('email')
                 username = form.cleaned_data.get('username')
 
-                # اگر ایمیل تکراری باشد، خطا را نشان بده
+
                 if User.objects.filter(email=email).exists():
-                    form.add_error('email', 'این ایمیل قبلاً استفاده شده است.')
+                    form.add_error('email', 'this email has been used befor .')
                     context = {'form': form}
                     return render(request, 'accounts/signup.html', context)
                 
-                # در غیر این صورت، ثبت‌نام را انجام بده
+
                 form.save()
                 return redirect('accounts:login')
         else:
